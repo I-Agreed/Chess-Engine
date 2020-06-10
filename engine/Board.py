@@ -34,7 +34,7 @@ class Board:
         self.screen.fill((0, 0, 0))
         for i in self.tiles:
             for j in i:
-                self._drawTile(j)
+                i.draw()
         pygame.display.flip()
 
     def mainloop(self):
@@ -42,8 +42,15 @@ class Board:
             self.events()
             self.draw()
 
+    def place(self, x, y, piece):
+        self.tiles[x][y].setPiece(piece)
+
     def thread(self):
         pass
+
+    def isPiece(self, x, y):
+        return self.tiles[x][y].piece is not None
+
 
 if __name__ == "__main__":
     board = Board()
