@@ -25,11 +25,24 @@ class Board:
                                            [(255, 255, 255), (0, 0, 0)][(i + j) % 2], self))
 
         self.images = getImages(self.tileSize)
+        self.isWhiteTurn = True
+        self.selectedTile = None
 
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
+            elif event.type == pygame.MOUSEBUTTONUP:
+
+                pos = pygame.mouse.get_pos()
+                self.mouseEvent((pos[0]-self.padding-self.border)%self.tileSize,
+                                (pos[1]-self.padding-self.border)%self.tileSize)
+
+    def mouseEvent(self, tileX, tileY):
+        if self.selectedTile is not None:
+            pass
+
+        self.selectedTile
 
     def _drawTile(self, tile):
         pygame.draw.rect(self.screen, tile.colour, tile)
