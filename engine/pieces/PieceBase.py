@@ -1,10 +1,11 @@
 class PieceBase():
-    def __init__(self):
+    def __init__(self, colour):
         self.x = None
         self.y = None
         self.board = None
         self.tile = None
-        self.image = "test"
+        self.image = "test_" + colour
+        self.colour = colour
 
     def _place(self, x, y, board, tile):
         self.x = x
@@ -18,7 +19,12 @@ class PieceBase():
         self.tile = tile
 
     def draw(self):
-        self.board.screen.blit(self.board.images["test"], self.tile)
+        self.board.screen.blit(self.board.images[self.image], self.tile)
 
     def getMoves(self):
-        return [(i,j) for j in range(self.board.height) for i in range(self.board.width)]
+        moves = []
+        for i in range(self.board.width):
+            for j in range(self.board.height):
+                if not self.board.isPiece(i, j):
+                    moves.append((i, j))
+        return moves
