@@ -4,6 +4,7 @@ class PieceBase():
         self.y = None
         self.board = None
         self.tile = None
+        self.image = "test"
 
     def _place(self, x, y, board, tile):
         self.x = x
@@ -13,8 +14,11 @@ class PieceBase():
 
     def _move(self, x, y, tile):
         self.x = x
-        self.y = y8
+        self.y = y
         self.tile = tile
 
     def draw(self):
-        
+        self.board.screen.blit(self.board.images["test"], self.tile)
+
+    def getMoves(self):
+        return [(i,j) for j in range(self.board.height) for i in range(self.board.width)]

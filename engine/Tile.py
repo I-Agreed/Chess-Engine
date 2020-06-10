@@ -2,8 +2,9 @@ import pygame
 
 
 class Tile(pygame.Rect):
-    def __init__(self, x1, y1, x2, y2, colour):
+    def __init__(self, x1, y1, x2, y2, colour, board):
         super().__init__(x1, y1, x2, y2)
+        self.board = board
         self.colour = colour
         self.piece = None
 

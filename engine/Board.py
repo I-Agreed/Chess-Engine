@@ -1,5 +1,7 @@
 import pygame
 from engine.Tile import Tile
+from engine.images import getImages
+from engine.pieces import *
 
 
 class Board:
@@ -20,7 +22,9 @@ class Board:
                 self.tiles[-1].append(Tile((self.padding + self.border) + i * self.tileSize,
                                            (self.padding + self.border) + j * self.tileSize,
                                            self.tileSize, self.tileSize,
-                                           [(255, 255, 255), (0, 0, 0)][(i + j) % 2]))
+                                           [(255, 255, 255), (0, 0, 0)][(i + j) % 2], self))
+
+        self.images = getImages(self.tileSize)
 
     def events(self):
         for event in pygame.event.get():
@@ -34,7 +38,7 @@ class Board:
         self.screen.fill((0, 0, 0))
         for i in self.tiles:
             for j in i:
-                i.draw()
+                j.draw()
         pygame.display.flip()
 
     def mainloop(self):
@@ -44,6 +48,7 @@ class Board:
 
     def place(self, x, y, piece):
         self.tiles[x][y].setPiece(piece)
+        piece._place(x, y, self, self.tiles[x][y])
 
     def thread(self):
         pass
@@ -54,4 +59,6 @@ class Board:
 
 if __name__ == "__main__":
     board = Board()
+    piece = PieceBase.PieceBase()
+    board.place(0, 0, piece)
     board.mainloop()
