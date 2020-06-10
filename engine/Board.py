@@ -6,7 +6,8 @@ from engine.Style import Style
 
 
 class Board:
-    def __init__(self, width=8, height=8, tileSize=50, padding=5, border=5):
+    def __init__(self, width=8, height=8, tileSize=50, padding=5, border=5, blackControl="human", whiteControl="human"):
+
         self.border = border
         self.padding = padding
         pygame.init()
@@ -23,11 +24,16 @@ class Board:
                 self.tiles[-1].append(Tile((self.padding + self.border) + i * self.tileSize,
                                            (self.padding + self.border) + j * self.tileSize,
                                            self.tileSize, self.tileSize,
-                                           ["white", "black"][(i + j) % 2], self))
+                                           ["white", "black"][(i + j) % 2], self, i, j))
 
         self.images = getImages(self.tileSize)
         self.turnColour = "white"
         self.selectedTile = None
+        self.highlightedTiles = []
+
+        self.control = {}
+        self.control["black"] = blackControl
+        self.control["white"] = whiteControl
 
     def events(self):
         for event in pygame.event.get():
@@ -44,7 +50,13 @@ class Board:
                 tileY < 0 or tileY >= self.height:
             return
         if self.selectedTile is self.tiles[tileX][tileY]:
-            self.deselect()
+            self.unselect()
+        elif self.selectedTile is not None:
+            if self.tiles[tileX][tileY].isHighlighted:
+                self.movePiece(*self.selectedTile.pos, tileX, tileY)
+                self.unselect()
+                self.swapTurns()
+
         else:
             if self.tiles[tileX][tileY].piece is not None and \
                     self.tiles[tileX][tileY].piece.colour == self.turnColour:
@@ -70,6 +82,11 @@ class Board:
         self.tiles[x][y].setPiece(piece)
         piece._place(x, y, self, self.tiles[x][y])
 
+    def movePiece(self, x, y, dx, dy):
+        self.tiles[dx][dy].piece = self.tiles[x][y].piece
+        self.tiles[x][y].piece = None
+        self.tiles[dx][dy].piece._move(dx, dy, self.tiles[dx][dy])
+
     def thread(self):
         pass
 
@@ -79,10 +96,32 @@ class Board:
     def select(self, x, y):
         self.selectedTile = self.tiles[x][y]
         self.selectedTile.select()
+        if self.selectedTile.piece is not None:
+            for i in self.selectedTile.piece.getMoves():
+                self.highlight(*i)
 
-    def deselect(self):
+    def unselect(self):
         self.selectedTile.unselect()
         self.selectedTile = None
+        self.unhighlightAll()
+
+    def highlight(self, x, y):
+        self.tiles[x][y].highlight()
+        self.highlightedTiles.append(self.tiles[x][y])
+
+    def unhighlight(self, x, y):
+        self.tiles[x][y].unhighlight()
+        self.highlightedTiles.remove(self.tiles[x][y])
+
+    def unhighlightAll(self):
+        for i in self.highlightedTiles:
+            i.unhighlight()
+        self.highlightedTiles.clear()
+
+    def swapTurns(self):
+        self.turnColour = ["white", "black"][self.turnColour == "white"]
+        if self.control[self.turnColour] != "human":
+            self.control[self.turnColour].eval_turn() # TODO: work out ai structure
 
 
 if __name__ == "__main__":
