@@ -1,1 +1,1 @@
-__all__ = ["PieceBase"]
+__all__ = ["PieceBase", "Bishop", "King", "Knight", "Pawn", "Queen", "Rook"]

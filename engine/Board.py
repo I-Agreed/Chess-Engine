@@ -121,13 +121,11 @@ class Board:
     def swapTurns(self):
         self.turnColour = ["white", "black"][self.turnColour == "white"]
         if self.control[self.turnColour] != "human":
-            self.control[self.turnColour].eval_turn() # TODO: work out ai structure
+            self.control[self.turnColour].eval_turn()  # TODO: work out ai structure
 
 
 if __name__ == "__main__":
     board = Board()
-    piece = PieceBase.PieceBase("white")
+    piece = Bishop.Bishop("white")
     board.place(0, 0, piece)
-    piece2 = PieceBase.PieceBase("black")
-    board.place(1, 0, piece2)
     board.mainloop()
