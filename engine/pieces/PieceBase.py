@@ -6,6 +6,8 @@ class PieceBase():
         self.tile = None
         self.image = "test_" + colour
         self.colour = colour
+        self.hasMoved = False
+        self.moves = 0
 
     def _place(self, x, y, board, tile):
         self.x = x
@@ -17,6 +19,8 @@ class PieceBase():
         self.x = x
         self.y = y
         self.tile = tile
+        self.hasMoved = True
+        self.moves += 1
 
     def draw(self):
         self.board.screen.blit(self.board.images[self.image], self.tile)
