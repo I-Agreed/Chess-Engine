@@ -62,7 +62,6 @@ class Board:
                     self.tiles[tileX][tileY].piece.colour == self.turnColour:
                 self.select(tileX, tileY)
 
-
     def _drawTile(self, tile):
         pygame.draw.rect(self.screen, tile.colour, tile)
 
@@ -94,10 +93,9 @@ class Board:
         return self.tiles[x][y].piece is not None
 
     def pieceColour(self, x, y):
-        if isPiece(x, y):
-            return self.tiles[x][y].piece.colour:
+        if self.isPiece(x, y):
+            return self.tiles[x][y].piece.colour
         return False
-
 
     def select(self, x, y):
         self.selectedTile = self.tiles[x][y]
@@ -132,14 +130,14 @@ class Board:
 
 if __name__ == "__main__":
     board = Board()
-    piece = Bishop.Bishop("white")
+    piece = Rook.Rook("white")
     board.place(4, 4, piece)
     piece2 = Bishop.Bishop("black")
-    board.place(2, 2, piece2)
+    board.place(4, 6, piece2)
     piece2 = Bishop.Bishop("black")
-    board.place(6, 6, piece2)
+    board.place(4, 1, piece2)
     piece2 = Bishop.Bishop("black")
-    board.place(6, 2, piece2)
+    board.place(6, 4, piece2)
     piece2 = Bishop.Bishop("black")
-    board.place(2, 6, piece2)
+    board.place(1, 4, piece2)
     board.mainloop()
