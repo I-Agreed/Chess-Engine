@@ -14,4 +14,3 @@ class Knight(PieceBase):
                   (-1, -2), (-2, -1)):
             x = self.x + i[0]
             y = self.y + i[1]
-            
