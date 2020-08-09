@@ -15,7 +15,7 @@ class Bishop(PieceBase):
                 moves.append((x, y))
             else:
                 break
-        for i in range(1, min(self.x, self.y)):
+        for i in range(1, min(self.x, self.y)+1):
             x = self.x - i
             y = self.y - i
             if not self.board.isPiece(x, y):

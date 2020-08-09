@@ -8,10 +8,10 @@ class Knight(PieceBase):
     def getMoves(self):
         moves = []
 
-        for i in [(1, 2), (2, 1),
+        for i in ((1, 2), (2, 1),
                   (-1, 2), (2, -1),
                   (1, -2), (-2, 1),
-                  (-1, -2), (-2, -1)]:
+                  (-1, -2), (-2, -1)):
             x = self.x + i[0]
             y = self.y + i[1]
             
