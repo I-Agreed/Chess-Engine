@@ -14,3 +14,8 @@ class Knight(PieceBase):
                   (-1, -2), (-2, -1)):
             x = self.x + i[0]
             y = self.y + i[1]
+            if not 0 <= x < self.board.width and \
+                    not 0 <= y < self.board.height:
+                continue
+            moves.append((self.x + i[0], self.y + i[1]))
+        return moves

@@ -35,6 +35,14 @@ class Board:
         self.control["black"] = blackControl
         self.control["white"] = whiteControl
 
+    def setPlayers(self, white="human", black="human"):
+        self.control["white"] = white
+        self.control["black"] = black
+
+        if self.control[self.turnColour] != "human":
+            self.control[self.turnColour].eval_turn()
+            self.swapTurns()
+
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -126,11 +134,12 @@ class Board:
         self.turnColour = ["white", "black"][self.turnColour == "white"]
         if self.control[self.turnColour] != "human":
             self.control[self.turnColour].eval_turn()  # TODO: work out ai structure
+            self.swapTurns()
 
 
 if __name__ == "__main__":
     board = Board()
-    piece = Rook.Rook("white")
+    piece = Knight.Knight("white")
     board.place(4, 4, piece)
     piece2 = Bishop.Bishop("black")
     board.place(4, 6, piece2)
