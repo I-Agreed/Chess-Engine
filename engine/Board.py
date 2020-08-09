@@ -100,6 +100,9 @@ class Board:
     def isPiece(self, x, y):
         return self.tiles[x][y].piece is not None
 
+    def getPiece(self, x, y):
+        return self.tiles[x][y].piece
+
     def pieceColour(self, x, y):
         if self.isPiece(x, y):
             return self.tiles[x][y].piece.colour

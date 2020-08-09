@@ -1,6 +1,5 @@
 from engine.pieces.PieceBase import PieceBase
 
-
 class Queen(PieceBase):
     def __init__(self, colour):
         super().__init__(colour)
@@ -37,7 +36,7 @@ class Queen(PieceBase):
                 moves.append((x, y))
             else:
                 break
-        for i in range(1, min(self.x, self.y) + 1):
+        for i in range(1, min(self.x, self.y)+1):
             x = self.x - i
             y = self.y - i
             if not self.board.isPiece(x, y):
