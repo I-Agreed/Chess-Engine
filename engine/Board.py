@@ -94,6 +94,14 @@ class Board:
         self.tiles[x][y].piece = None
         self.tiles[dx][dy].piece._move(dx, dy, self.tiles[dx][dy])
 
+    def getPieces(self, colour=None):
+        out = []
+        for i in self.tiles:
+            for j in i:
+                if j.piece is not None and (colour is None or j.piece.colour == colour):
+                    out.append(j)
+        return out
+
     def thread(self):
         pass
 
@@ -152,4 +160,7 @@ if __name__ == "__main__":
     board.place(6, 4, piece2)
     piece2 = Bishop.Bishop("black")
     board.place(1, 4, piece2)
+    piece2 = King.King("white")
+    board.place(3, 4, piece2)
     board.mainloop()
+    # TODO: king, stalemate, fancy pawn rules, get sprites

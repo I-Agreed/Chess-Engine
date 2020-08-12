@@ -28,7 +28,7 @@ class Bishop(PieceBase):
                 break
             else:
                 break
-        for i in range(1, min(size - self.x, self.y) + 1):
+        for i in range(1, min(size - self.x, self.y)):
             x = self.x + i
             y = self.y - i
             if not self.board.isPiece(x, y):
@@ -38,11 +38,11 @@ class Bishop(PieceBase):
                 break
             else:
                 break
-        for i in range(1, min(self.x, size - self.y) + 1):
+        for i in range(1, min(self.x, size - self.y)):
             x = self.x - i
             y = self.y + i
             if not self.board.isPiece(x, y):
-                print(1)
+                moves.append((x, y))
             elif self.board.getPiece(x, y).colour != self.colour:
                 moves.append((x, y))
                 break
