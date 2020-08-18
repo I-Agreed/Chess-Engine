@@ -16,7 +16,7 @@ class Board:
         self.width = width
         self.screen = pygame.display.set_mode((tileSize * width + (self.padding + self.border) * 2,
                                                tileSize * height + (self.padding + self.border) * 2))
-
+        self.pieces = []
         self.tiles = []
         for i in range(self.width):
             self.tiles.append([])
@@ -34,6 +34,7 @@ class Board:
         self.control = {}
         self.control["black"] = blackControl
         self.control["white"] = whiteControl
+        self.kings = {}
 
     def setPlayers(self, white="human", black="human"):
         self.control["white"] = white
@@ -42,6 +43,15 @@ class Board:
         if self.control[self.turnColour] != "human":
             self.control[self.turnColour].eval_turn()
             self.swapTurns()
+
+    def getKing(self, colour):
+        if colour in self.kings:
+            return self.kings[colour]
+        else:
+            for i in self.pieces:
+                if isinstance(i, King.King) and i.colour == colour:
+                    self.kings[colour] = i
+                    return i
 
     def events(self):
         for event in pygame.event.get():
@@ -87,6 +97,7 @@ class Board:
 
     def place(self, x, y, piece):
         self.tiles[x][y].setPiece(piece)
+        self.pieces.append(piece)
         piece._place(x, y, self, self.tiles[x][y])
 
     def movePiece(self, x, y, dx, dy):
@@ -95,12 +106,10 @@ class Board:
         self.tiles[dx][dy].piece._move(dx, dy, self.tiles[dx][dy])
 
     def getPieces(self, colour=None):
-        out = []
-        for i in self.tiles:
-            for j in i:
-                if j.piece is not None and (colour is None or j.piece.colour == colour):
-                    out.append(j)
-        return out
+        if colour is not None:
+            return list(filter(lambda a: a.colour == colour, self.pieces))
+        else:
+            return self.pieces
 
     def thread(self):
         pass

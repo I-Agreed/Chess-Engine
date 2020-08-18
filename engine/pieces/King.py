@@ -15,7 +15,7 @@ class King(PieceBase):
         x = self.x
         y = self.y
         for i in self.board.getPieces(["black", "white"][self.colour == "black"]):
-            for j in i.piece.getMoves():
+            for j in i.getMoves():
                 enemyMoves.append(j)
         for i in range(-1, 2):
             for j in range(-1, 2):
