@@ -32,3 +32,6 @@ class PieceBase():
                 if not self.board.isPiece(i, j):
                     moves.append((i, j))
         return moves
+
+    def isInCheck(self):
+        return False

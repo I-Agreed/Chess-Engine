@@ -171,5 +171,7 @@ if __name__ == "__main__":
     board.place(1, 4, piece2)
     piece2 = King.King("white")
     board.place(3, 4, piece2)
+    piece2 = Rook.Rook("white")
+    board.place(4, 5, piece2)
     board.mainloop()
     # TODO: king, stalemate, fancy pawn rules, get sprites
