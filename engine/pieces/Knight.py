@@ -6,6 +6,7 @@ class Knight(PieceBase):
         super().__init__(colour)
 
     def getMoves(self):
+        kingMoves = self.board.getKing(self.colour).isInCheck()
         moves = []
 
         for i in ((1, 2), (2, 1),

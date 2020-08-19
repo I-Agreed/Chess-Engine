@@ -32,87 +32,110 @@ class King(PieceBase):
 
     def isInCheck(self):
         size = min(self.board.height, self.board.width)
-        out = False
+        out = []
         for i in range(1, size - max(self.x, self.y)):
+            moves = []
             x = self.x + i
             y = self.y + i
-            if not self.board.isPiece(x, y) and not out:
+            if not self.board.isPiece(x, y):
                 pass
-            elif self.board.getPiece(x, y).colour != self.colour and not out:
+            elif self.board.getPiece(x, y).colour != self.colour:
                 if type(self.board.getPiece(x, y)) in (Queen.Queen, Bishop.Bishop):
-                    out = True
+                    moves.append((x, y))
+                    for i in moves:
+                        out.append(i)
                 break
             else:
                 break
         for i in range(1, min(self.x, self.y) + 1):
+            moves = []
             x = self.x - i
             y = self.y - i
-            if not self.board.isPiece(x, y) and not out:
+            if not self.board.isPiece(x, y):
                 pass
-            elif self.board.getPiece(x, y).colour != self.colour and not out:
+            elif self.board.getPiece(x, y).colour != self.colour:
                 if type(self.board.getPiece(x, y)) in (Queen.Queen, Bishop.Bishop):
-                    out = True
+                    moves.append((x, y))
+                    out.append(moves)
                 break
             else:
                 break
         for i in range(1, min(size - self.x, self.y)):
+            moves = []
             x = self.x + i
             y = self.y - i
-            if not self.board.isPiece(x, y) and not out:
+            if not self.board.isPiece(x, y):
                 pass
-            elif self.board.getPiece(x, y).colour != self.colour and not out:
+            elif self.board.getPiece(x, y).colour != self.colour:
                 if type(self.board.getPiece(x, y)) in (Queen.Queen, Bishop.Bishop):
-                    out = True
+                    moves.append(x, y)
+                    out.append(moves)
+
                 break
             else:
                 break
         for i in range(1, min(self.x, size - self.y)):
+            moves = []
             x = self.x - i
             y = self.y + i
-            if not self.board.isPiece(x, y) and not out:
+            if not self.board.isPiece(x, y):
                 pass
-            elif self.board.getPiece(x, y).colour != self.colour and not out:
+            elif self.board.getPiece(x, y).colour != self.colour:
                 if type(self.board.getPiece(x, y)) in (Queen.Queen, Bishop.Bishop):
-                    out = True
+                    moves.append(x, y)
+                    out.append(moves)
+
                 break
             else:
                 break
         # ROOK
         w = self.board.width
         h = self.board.height
-        if not out:
-            for i in range(self.x + 1, w):
-                if not self.board.isPiece(i, self.y) and not out:
-                    pass
-                else:
-                    if self.board.getPiece(i, self.y).colour != self.colour and type(
-                            self.board.getPiece(i, self.y)) == Rook.Rook and not True:
-                        out = True
-                    break
-            for i in range(self.y + 1, h):
-                if not self.board.isPiece(self.x, i):
-                    pass
-                else:
-                    if self.board.getPiece(self.x, i).colour != self.colour and type(
-                            self.board.getPiece(self.x, i)) == Rook.Rook and not True:
-                        out = True
-                    break
-            for i in range(self.x - 1, -1, -1):
-                if not self.board.isPiece(i, self.y):
-                    pass
-                else:
-                    if self.board.getPiece(i, self.y).colour != self.colour and type(
-                            self.board.getPiece(i, self.y)) == Rook.Rook and not True:
-                        out = True
-                    break
+        for i in range(self.x + 1, w):
+            moves = []
+            if not self.board.isPiece(i, self.y):
+                moves.append((i, self.y))
+            else:
+                if self.board.getPiece(i, self.y).colour != self.colour and type(
+                        self.board.getPiece(i, self.y)) == Rook.Rook and not True:
+                    moves.append((i, self.y))
+                    out.append(moves)
+
+                break
+        for i in range(self.y + 1, h):
+            moves = []
+            if not self.board.isPiece(self.x, i):
+                pass
+            else:
+                if self.board.getPiece(self.x, i).colour != self.colour and type(
+                        self.board.getPiece(self.x, i)) == Rook.Rook and not True:
+                    moves.append((self.x, i))
+                    out.append(moves)
+
+                break
+        for i in range(self.x - 1, -1, -1):
+            moves = []
+            if not self.board.isPiece(i, self.y):
+                pass
+            else:
+                if self.board.getPiece(i, self.y).colour != self.colour and type(
+                        self.board.getPiece(i, self.y)) == Rook.Rook and not True:
+                    moves.append((i, self.y))
+                    out.append(moves)
+
+                break
             for i in range(self.y - 1, -1, -1):
+                moves = []
                 if not self.board.isPiece(self.x, i):
                     pass
                 else:
                     if self.board.getPiece(self.x, i).colour != self.colour and type(
                             self.board.getPiece(self.x, i)) == Rook.Rook and not True:
-                        out = True
+                        moves.append((self.x, i))
+                        out.append(moves)
+
                     break
+        # Knight
         for i in ((1, 2), (2, 1),
                   (-1, 2), (2, -1),
                   (1, -2), (-2, 1),
@@ -123,7 +146,8 @@ class King(PieceBase):
                     0 <= y < self.board.height:
                 if self.board.isPiece(x, y) and self.board.getPiece(x, y).colour != self.colour and type(
                    self.board.getPiece(x, y)) == Knight.Knight:
-                    out = True
+                    out.append([(x, y)])
+        # Pawn
         for i in (((1, -1), (-1, -1)), ((1, 1), (-1, 1)))[self.colour == "black"]:
             x = self.x + i[0]
             y = self.y + i[1]
@@ -131,5 +155,5 @@ class King(PieceBase):
                     0 <= y < self.board.height:
                 if self.board.isPiece(x, y) and self.board.getPiece(x, y).colour != self.colour and type(
                    self.board.getPiece(x, y)) == Pawn.Pawn:
-                    out = True
+                    out.append([(x, y)])
         return out
