@@ -5,8 +5,8 @@ class Knight(PieceBase):
     def __init__(self, colour):
         super().__init__(colour)
 
-    def getMoves(self):
-        kingMoves = self.board.getKing(self.colour).isInCheck()
+    def getMoves(self, useInCheck=True):
+
         moves = []
 
         for i in ((1, 2), (2, 1),
@@ -19,4 +19,8 @@ class Knight(PieceBase):
                0 <= y < self.board.height:
                 moves.append((x, y))
 
+        if useInCheck:
+            kingMoves = self.board.getKing(self.colour).isInCheck()
+            if kingMoves:
+                moves = filter(lambda i: i in kingMoves, moves)
         return moves

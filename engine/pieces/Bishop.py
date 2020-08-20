@@ -5,7 +5,7 @@ class Bishop(PieceBase):
     def __init__(self, colour):
         super().__init__(colour)
 
-    def getMoves(self):
+    def getMoves(self, useInCheck=True):
         size = min(self.board.height, self.board.width)
         moves = []
         for i in range(1, size - max(self.x, self.y)):
@@ -48,5 +48,8 @@ class Bishop(PieceBase):
                 break
             else:
                 break
-
+        if useInCheck:
+            kingMoves = self.board.getKing(self.colour).isInCheck()
+            if kingMoves:
+                moves = filter(lambda i: i in kingMoves, moves)
         return moves

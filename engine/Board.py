@@ -52,7 +52,7 @@ class Board:
                 if isinstance(i, King.King) and i.colour == colour:
                     self.kings[colour] = i
                     return i
-
+        return None
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -173,5 +173,8 @@ if __name__ == "__main__":
     board.place(3, 4, piece2)
     piece2 = Rook.Rook("white")
     board.place(4, 5, piece2)
+    piece2 = King.King("black")
+    board.place(0, 0, piece2)
     board.mainloop()
+
     # TODO: king, stalemate, fancy pawn rules, get sprites

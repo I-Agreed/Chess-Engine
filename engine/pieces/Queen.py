@@ -4,7 +4,7 @@ class Queen(PieceBase):
     def __init__(self, colour):
         super().__init__(colour)
 
-    def getMoves(self):
+    def getMoves(self, useInCheck=True):
         moves = []
         w = self.board.width
         h = self.board.height
@@ -57,4 +57,8 @@ class Queen(PieceBase):
                 moves.append((x, y))
             else:
                 break
+        if useInCheck:
+            kingMoves = self.board.getKing(self.colour).isInCheck()
+            if kingMoves:
+                moves = filter(lambda i: i in kingMoves, moves)
         return moves

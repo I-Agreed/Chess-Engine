@@ -4,5 +4,5 @@ class Pawn(PieceBase):
     def __init__(self, colour):
         super().__init__(colour)
 
-    def getMoves(self):
+    def getMoves(self, useInCheck=True):
         pass

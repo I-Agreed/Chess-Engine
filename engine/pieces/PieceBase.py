@@ -25,7 +25,7 @@ class PieceBase():
     def draw(self):
         self.board.screen.blit(self.board.images[self.image], self.tile)
 
-    def getMoves(self):
+    def getMoves(self, useInCheck=True):
         moves = []
         for i in range(self.board.width):
             for j in range(self.board.height):

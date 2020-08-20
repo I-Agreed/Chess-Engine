@@ -14,14 +14,15 @@ class King(PieceBase):
         # TODO: Check all directions and knight jumps from the king
         pass
 
-    def getMoves(self):
+    def getMoves(self, useInCheck=True):
         moves = []
         enemyMoves = []
         x = self.x
         y = self.y
-        for i in self.board.getPieces(["black", "white"][self.colour == "black"]):
-            for j in i.getMoves():
-                enemyMoves.append(j)
+        if useInCheck:
+            for i in self.board.getPieces(["black", "white"][self.colour == "black"]):
+                for j in i.getMoves(False):
+                    enemyMoves.append(j)
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if 0 <= x + i < self.board.width and \
@@ -68,7 +69,7 @@ class King(PieceBase):
                 pass
             elif self.board.getPiece(x, y).colour != self.colour:
                 if type(self.board.getPiece(x, y)) in (Queen.Queen, Bishop.Bishop):
-                    moves.append(x, y)
+                    moves.append((x, y))
                     out.append(moves)
 
                 break
@@ -82,7 +83,7 @@ class King(PieceBase):
                 pass
             elif self.board.getPiece(x, y).colour != self.colour:
                 if type(self.board.getPiece(x, y)) in (Queen.Queen, Bishop.Bishop):
-                    moves.append(x, y)
+                    moves.append((x, y))
                     out.append(moves)
 
                 break
