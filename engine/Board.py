@@ -160,6 +160,7 @@ class Board:
         self.highlightedTiles.clear()
 
     def end(self, Type="checkmate"):
+        print("end")
         self.turnColour = "none"
         pygame.display.set_caption(f"Game over: {Type}")
 
