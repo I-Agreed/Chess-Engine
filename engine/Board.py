@@ -3,6 +3,7 @@ from engine.Tile import Tile
 from engine.images import getImages
 from engine.pieces import *
 from engine.Style import Style
+from engine.Layout import Layout
 
 import ctypes
 
@@ -162,25 +163,25 @@ class Board:
             self.control[self.turnColour].eval_turn()  # TODO: work out ai structure
             self.swapTurns()
 
+    def setup(self, layout):
+        pieces = {"p": Pawn.Pawn,
+                  "r": Rook.Rook,
+                  "n": Knight.Knight,
+                  "k": King.King,
+                  "q": Queen.Queen,
+                  "b": Bishop.Bishop}
+        layout = Layout().__getattribute__(layout).split("\n")
+        for y, i in enumerate(layout):
+            for x, j in enumerate(i):
+                if j != ".":
+                    colour = ["black", "white"][j.isupper()]
+                    self.place(x, y, pieces[j.lower()](colour))
+
+
 
 if __name__ == "__main__":
     board = Board()
-    piece = Knight.Knight("white")
-    board.place(4, 4, piece)
-    piece2 = Bishop.Bishop("black")
-    board.place(4, 6, piece2)
-    piece2 = Bishop.Bishop("black")
-    board.place(4, 1, piece2)
-    piece2 = Bishop.Bishop("black")
-    board.place(6, 4, piece2)
-    piece2 = Bishop.Bishop("black")
-    board.place(1, 4, piece2)
-    piece2 = King.King("white")
-    board.place(3, 4, piece2)
-    piece2 = Rook.Rook("white")
-    board.place(4, 5, piece2)
-    piece2 = King.King("black")
-    board.place(0, 0, piece2)
+    board.setup("standard")
     board.mainloop()
 
     # TODO: king, stalemate, fancy pawn rules, get sprites

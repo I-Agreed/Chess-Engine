@@ -1,0 +1,13 @@
+class Layout:
+    standard = """
+rnbqkbnr
+pppppppp
+........
+........
+........
+........
+PPPPPPPP
+RNBQKBNR"""[1:]
+
+if __name__ == '__main__':
+    print(Layout.standard)

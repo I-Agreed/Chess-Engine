@@ -10,13 +10,14 @@ class Pawn(PieceBase):
     def getMoves(self, useInCheck=True):
         direction = [1, -1][self.colour == "white"]
         moves = []
-        if not self.board.isPiece((self.x, self.y + direction)) and 0 <= self.y + direction < self.board.height:
+        if not self.board.isPiece(self.x, self.y + direction) and 0 <= self.y + direction < self.board.height:
             moves.append((self.x, self.y + direction))
-        if not self.hasMoved and self.board.isPiece(
-                (self.x, self.y + direction * 2)) and 0 <= self.y + direction < self.board.height:
+        if not self.hasMoved and not self.board.isPiece(
+                self.x, self.y + direction * 2) and 0 <= self.y + direction * 2 < self.board.height:
             moves.append((self.x, self.y + direction * 2))
         for i in (1, -1):
             if 0 <= self.y + i < self.board.height and self.board.isPiece(
-                    (self.x + i, self.y + direction)) and self.board.getPiece(
-                    (self.x + i, self.y + direction)).colour != self.colour:
+                    self.x + i, self.y + direction) and self.board.getPiece(
+                    self.x + i, self.y + direction).colour != self.colour:
                 moves.append((self.x + i, self.y + direction))
+        return moves
