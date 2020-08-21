@@ -1,10 +1,11 @@
 class PieceBase():
+    piece = "base"
     def __init__(self, colour):
         self.x = None
         self.y = None
         self.board = None
         self.tile = None
-        self.image = "test_" + colour
+        self.image = self.piece + "_" + colour
         self.colour = colour
         self.hasMoved = False
         self.moves = 0

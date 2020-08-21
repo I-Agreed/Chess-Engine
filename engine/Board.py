@@ -4,6 +4,8 @@ from engine.images import getImages
 from engine.pieces import *
 from engine.Style import Style
 
+import ctypes
+
 
 class Board:
     def __init__(self, width=8, height=8, tileSize=50, padding=5, border=5, blackControl="human", whiteControl="human"):
@@ -91,6 +93,10 @@ class Board:
         pygame.display.flip()
 
     def mainloop(self):
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(True)
+        except:
+            pass
         while 1:
             self.events()
             self.draw()

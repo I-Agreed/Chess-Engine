@@ -7,6 +7,7 @@ from engine.pieces import Pawn
 
 
 class King(PieceBase):
+    piece = "king"
     def __init__(self, colour):
         super().__init__(colour)
 

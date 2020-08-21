@@ -1,6 +1,6 @@
 import pygame
 
-images = ["test"]
+images = ["test", "pawn", "king", "queen", "bishop", "rook", "knight"]
 
 
 def getImages(tileSize, files=images):

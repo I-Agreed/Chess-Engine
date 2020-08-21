@@ -2,6 +2,7 @@ from engine.pieces.PieceBase import PieceBase
 
 
 class Knight(PieceBase):
+    piece = "knight"
     def __init__(self, colour):
         super().__init__(colour)
 
