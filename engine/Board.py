@@ -31,6 +31,7 @@ class Board:
 
         self.images = getImages(self.tileSize)
         self.turnColour = "white"
+        pygame.display.set_caption(f"{self.turnColour} Turn")
         self.selectedTile = None
         self.highlightedTiles = []
 
@@ -56,6 +57,7 @@ class Board:
                     self.kings[colour] = i
                     return i
         return None
+
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -157,10 +159,19 @@ class Board:
             i.unhighlight()
         self.highlightedTiles.clear()
 
+    def end(self, Type="checkmate"):
+        self.turnColour = "none"
+        pygame.display.set_caption(f"Game over: {Type}")
+
     def swapTurns(self):
         self.turnColour = ["white", "black"][self.turnColour == "white"]
+        pygame.display.set_caption(f"{self.turnColour} Turn")
+        gameState = self.checkGameState()
+        if gameState != "normal":
+            self.end(gameState)
+
         if self.control[self.turnColour] != "human":
-            self.control[self.turnColour].eval_turn()  # TODO: work out ai structure
+            self.control[self.turnColour].eval_turn()
             self.swapTurns()
 
     def setup(self, layout):
@@ -177,11 +188,20 @@ class Board:
                     colour = ["black", "white"][j.isupper()]
                     self.place(x, y, pieces[j.lower()](colour))
 
+    def checkGameState(self):
+        stalemate = True
+        checkmate = False
+        for i in self.getPieces(self.turnColour):
+            moves = i.getMoves()
+            if len(moves) > 0:
+                stalemate = False
+                break
+        if self.getKing(self.turnColour).isInCheck():
+            checkmate = True
+        return ("normal", "checkmate", "stalemate")[checkmate + stalemate * 2]
 
 
 if __name__ == "__main__":
     board = Board()
     board.setup("standard")
     board.mainloop()
-
-    # TODO: king, stalemate, fancy pawn rules, get sprites

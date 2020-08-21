@@ -11,10 +11,6 @@ class King(PieceBase):
     def __init__(self, colour):
         super().__init__(colour)
 
-    def isInCheck(self):
-        # TODO: Check all directions and knight jumps from the king
-        pass
-
     def getMoves(self, useInCheck=True):
         moves = []
         enemyMoves = []
