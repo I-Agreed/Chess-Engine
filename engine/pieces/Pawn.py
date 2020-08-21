@@ -16,8 +16,9 @@ class Pawn(PieceBase):
                 self.x, self.y + direction * 2) and 0 <= self.y + direction * 2 < self.board.height:
             moves.append((self.x, self.y + direction * 2))
         for i in (1, -1):
-            if 0 <= self.y + i < self.board.height and self.board.isPiece(
-                    self.x + i, self.y + direction) and self.board.getPiece(
-                    self.x + i, self.y + direction).colour != self.colour:
+            if 0 <= self.y + direction < self.board.height and \
+               0 <= self.x + i < self.board.width and self.board.isPiece(
+               self.x + i, self.y + direction) and self.board.getPiece(
+               self.x + i, self.y + direction).colour != self.colour:
                 moves.append((self.x + i, self.y + direction))
         return moves

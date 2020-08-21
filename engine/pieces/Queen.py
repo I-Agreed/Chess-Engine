@@ -62,7 +62,7 @@ class Queen(PieceBase):
                 break
             else:
                 break
-        for i in range(-1, min(size - self.x, self.y)):
+        for i in range(1, min(size - self.x, self.y)):
             x = self.x + i
             y = self.y - i
             if not self.board.isPiece(x, y):
@@ -72,7 +72,7 @@ class Queen(PieceBase):
                 break
             else:
                 break
-        for i in range(-1, min(self.x, size - self.y)):
+        for i in range(1, min(self.x, size - self.y)):
             x = self.x - i
             y = self.y + i
             if not self.board.isPiece(x, y):
