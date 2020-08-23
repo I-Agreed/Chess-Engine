@@ -175,7 +175,8 @@ class Board:
             self.control[self.turnColour].eval_turn()
             self.swapTurns()
 
-    def setup(self, layout):
+    def setup(self, layout, white="human", black="human"):
+        self.setPlayers(white, black)
         pieces = {"p": Pawn.Pawn,
                   "r": Rook.Rook,
                   "n": Knight.Knight,

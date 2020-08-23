@@ -18,6 +18,8 @@ class Knight(PieceBase):
             y = self.y + i[1]
             if 0 <= x < self.board.width and \
                0 <= y < self.board.height:
+                if self.board.isPiece(x, y) and self.board.getPiece(x, y).colour == self.colour:
+                    continue
                 moves.append((x, y))
 
         if useInCheck:

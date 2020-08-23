@@ -12,9 +12,9 @@ class Pawn(PieceBase):
         moves = []
         if not self.board.isPiece(self.x, self.y + direction) and 0 <= self.y + direction < self.board.height:
             moves.append((self.x, self.y + direction))
-        if not self.hasMoved and not self.board.isPiece(
-                self.x, self.y + direction * 2) and 0 <= self.y + direction * 2 < self.board.height:
-            moves.append((self.x, self.y + direction * 2))
+            if not self.hasMoved and not self.board.isPiece(
+               self.x, self.y + direction * 2) and 0 <= self.y + direction * 2 < self.board.height:
+                moves.append((self.x, self.y + direction * 2))
         for i in (1, -1):
             if 0 <= self.y + direction < self.board.height and \
                0 <= self.x + i < self.board.width and self.board.isPiece(
