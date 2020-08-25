@@ -9,6 +9,7 @@ class PieceBase():
         self.colour = colour
         self.hasMoved = False
         self.moves = 0
+        self.pawnEnPassantMove = -1
 
     def _place(self, x, y, board, tile):
         self.x = x
@@ -19,6 +20,8 @@ class PieceBase():
     def _move(self, x, y, tile):
         self.x = x
         self.y = y
+        if tile.piece is not None:
+            self.board.pieces.remove(tile.piece)
         self.tile = tile
         self.hasMoved = True
         self.moves += 1

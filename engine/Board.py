@@ -39,6 +39,7 @@ class Board:
         self.control["black"] = blackControl
         self.control["white"] = whiteControl
         self.kings = {}
+        self.turnNum = 1
 
     def setPlayers(self, white="human", black="human"):
         self.control["white"] = white
@@ -160,11 +161,11 @@ class Board:
         self.highlightedTiles.clear()
 
     def end(self, Type="checkmate"):
-        print("end")
         self.turnColour = "none"
         pygame.display.set_caption(f"Game over: {Type}")
 
     def swapTurns(self):
+        self.turnNum += 1
         self.turnColour = ["white", "black"][self.turnColour == "white"]
         pygame.display.set_caption(f"{self.turnColour} Turn")
         gameState = self.checkGameState()
