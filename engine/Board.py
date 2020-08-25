@@ -111,9 +111,10 @@ class Board:
         piece._place(x, y, self, self.tiles[x][y])
 
     def movePiece(self, x, y, dx, dy):
+        self.tiles[x][y].piece._move(dx, dy, self.tiles[dx][dy])
         self.tiles[dx][dy].piece = self.tiles[x][y].piece
         self.tiles[x][y].piece = None
-        self.tiles[dx][dy].piece._move(dx, dy, self.tiles[dx][dy])
+
 
     def getPieces(self, colour=None):
         if colour is not None:

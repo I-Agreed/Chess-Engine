@@ -11,9 +11,10 @@ class Pawn(PieceBase):
         if abs(self.y-y) == 2:
             self.pawnEnPassantMove = self.board.turnNum
         if self.x != x and not self.board.isPiece(x, y):
-            self.board.tiles[x][self.y] = None
-            if self.board.tiles[x][self.y] is not None:
-                self.board.pieces.remove(tile.piece)
+            if self.board.tiles[x][self.y].piece is not None:
+                self.board.pieces.remove(self.board.tiles[x][self.y].piece)
+            self.board.tiles[x][self.y].piece = None
+
         self.x = x
         self.y = y
         self.tile = tile
