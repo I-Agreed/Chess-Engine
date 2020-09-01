@@ -174,7 +174,10 @@ class Board:
             self.end(gameState)
 
         if self.control[self.turnColour] != "human":
-            self.control[self.turnColour].eval_turn()
+            moves = self.control[self.turnColour].eval_turn()
+            if self.isPiece(moves[0], moves[1]) and self.getPiece(moves[0], moves[1]).colour == self.turnColour and \
+                    (moves[2], moves[3]) in self.getPiece(moves[0], moves[1]):
+                self.movePiece(*moves)
             self.swapTurns()
 
     def setup(self, layout, white="human", black="human"):
