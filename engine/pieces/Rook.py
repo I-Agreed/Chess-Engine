@@ -41,5 +41,5 @@ class Rook(PieceBase):
         if useInCheck:
             kingMoves = self.board.getKing(self.colour).isInCheck()
             if kingMoves:
-                moves = filter(lambda i: i in kingMoves, moves)
+                moves = list(filter(lambda i: i in kingMoves, moves))
         return moves
